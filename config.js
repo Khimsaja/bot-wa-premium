@@ -122,6 +122,22 @@ module.exports = {
       description: 'Netflix Premium UHD 4K tanpa batas',
       note: '✅ Shared Account\n✅ Garansi sesuai paket\n✅ UHD 4K Quality',
     },
+
+    // ── YOUTUBE PREMIUM ──
+    youtube: {
+      name: '▶️ YouTube Premium',
+      keyword: 'youtube',
+      emoji: '▶️',
+      prices: [
+        {
+          duration: '1 Bulan',
+          price: 'Rp 5.000',
+          warranty: 'Full Garansi (Via Invite)',
+        },
+      ],
+      description: 'YouTube Premium tanpa iklan + YouTube Music',
+      note: '✅ Sistem Invite (pakai email kamu sendiri)\n✅ Full garansi 1 Bulan\n✅ No Ads, Background Play',
+    },
   },
 
   // ── Pesan Selamat Datang (opsional) ───────────────────
