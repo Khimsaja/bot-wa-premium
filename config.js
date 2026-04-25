@@ -1,9 +1,7 @@
 /**
  * ══════════════════════════════════════════════════════════
- *  KONFIGURASI BOT WHATSAPP - PREMIUM APP STORE
+ *  KONFIGURASI BOT WHATSAPP - TRIANGLE STORE
  * ══════════════════════════════════════════════════════════
- *  Edit file ini untuk menambah/mengubah produk, harga,
- *  dan pesan-pesan bot.
  */
 
 const path = require('path');
@@ -11,8 +9,8 @@ const path = require('path');
 module.exports = {
 
   // ── Info Toko ──────────────────────────────────────────
-  storeName: '🏪 PREMIUM APP STORE',
-  ownerNumber: '6281234567890', // Ganti dengan nomor WA kamu (format 62xxx)
+  storeName: 'TRIANGLE STORE',
+  ownerNumber: '6281234567890', // Ganti dengan nomor WA kamu
 
   // ── Prefix Command ────────────────────────────────────
   prefix: '#',
@@ -21,132 +19,72 @@ module.exports = {
   qrisImagePath: path.join(__dirname, 'media', 'qris.jpeg'),
 
   // ── Daftar Produk ─────────────────────────────────────
-  // Tambahkan produk baru dengan format yang sama
   products: {
-    // ── CHATGPT ──
     gpt: {
-      name: '🤖 ChatGPT Plus',
-      keyword: 'gpt',              // keyword trigger (case-insensitive)
-      emoji: '🤖',
+      name: 'CHATGPT PLUS',
+      keyword: 'gpt',
       prices: [
-        {
-          duration: '5 Hari',
-          price: 'Rp 8.000',
-          warranty: '5 Hari Garansi',
-        },
-        {
-          duration: '1 Bulan',
-          price: 'Rp 25.000',
-          warranty: 'Full Garansi',
-        },
+        { duration: '5 HARI', price: 'IDR 8.000', warranty: 'Garansi 5 Hari' },
+        { duration: '1 BULAN', price: 'IDR 25.000', warranty: 'Garansi 1 Bulan' },
       ],
-      description: 'Akses penuh ke ChatGPT Plus (GPT-4o, GPT-4.5, dll)',
-      note: '✅ Shared Account\n✅ Garansi sesuai paket\n✅ Akses semua fitur premium',
+      description: 'Akses penuh ChatGPT Plus (GPT-4o, GPT-4.5)',
+      note: 'Status: Shared Account\nAkses: Semua fitur premium aktif',
     },
 
-    // ── LEONARDO AI ──
     leonardo: {
-      name: '🎨 Leonardo AI',
+      name: 'LEONARDO AI',
       keyword: 'leonardo',
-      emoji: '🎨',
       prices: [
-        {
-          duration: '1 Minggu',
-          price: 'Rp 10.000',
-          warranty: '7 Hari Garansi',
-        },
-        {
-          duration: '1 Bulan',
-          price: 'Rp 30.000',
-          warranty: 'Full Garansi',
-        },
+        { duration: '1 MINGGU', price: 'IDR 10.000', warranty: 'Garansi 7 Hari' },
+        { duration: '1 BULAN', price: 'IDR 30.000', warranty: 'Garansi 1 Bulan' },
       ],
-      description: 'Akses premium Leonardo AI untuk generate gambar AI',
-      note: '✅ Shared Account\n✅ Garansi sesuai paket\n✅ Unlimited generation',
+      description: 'Akses premium Leonardo AI image generator',
+      note: 'Status: Shared Account\nAkses: Unlimited generation',
     },
 
-    // ── CANVA PRO ──
     canva: {
-      name: '🖌️ Canva Pro',
+      name: 'CANVA PRO',
       keyword: 'canva',
-      emoji: '🖌️',
       prices: [
-        {
-          duration: '1 Bulan',
-          price: 'Rp 15.000',
-          warranty: 'Full Garansi',
-        },
+        { duration: '1 BULAN', price: 'IDR 15.000', warranty: 'Garansi 1 Bulan' },
       ],
-      description: 'Akses Canva Pro untuk desain premium',
-      note: '✅ Private Account\n✅ Full garansi\n✅ Semua template premium',
+      description: 'Akses Canva Pro premium design',
+      note: 'Status: Private Account\nAkses: Semua template & fitur pro',
     },
 
-    // ── SPOTIFY PREMIUM ──
     spotify: {
-      name: '🎵 Spotify Premium',
+      name: 'SPOTIFY PREMIUM',
       keyword: 'spotify',
-      emoji: '🎵',
       prices: [
-        {
-          duration: '1 Bulan',
-          price: 'Rp 8.000',
-          warranty: '30 Hari Garansi',
-        },
-        {
-          duration: '3 Bulan',
-          price: 'Rp 20.000',
-          warranty: 'Full Garansi',
-        },
+        { duration: '1 BULAN', price: 'IDR 8.000', warranty: 'Garansi 1 Bulan' },
+        { duration: '3 BULAN', price: 'IDR 20.000', warranty: 'Garansi 3 Bulan' },
       ],
-      description: 'Spotify Premium tanpa iklan, download offline',
-      note: '✅ Private/Shared Account\n✅ Garansi sesuai paket\n✅ No Ads, Offline Mode',
+      description: 'Spotify Premium no ads & offline mode',
+      note: 'Status: Private / Shared Account\nAkses: Full premium features',
     },
 
-    // ── NETFLIX PREMIUM ──
     netflix: {
-      name: '🎬 Netflix Premium',
+      name: 'NETFLIX PREMIUM',
       keyword: 'netflix',
-      emoji: '🎬',
       prices: [
-        {
-          duration: '1 Bulan (1 Profil)',
-          price: 'Rp 20.000',
-          warranty: '30 Hari Garansi',
-        },
-        {
-          duration: '1 Bulan (Full Access)',
-          price: 'Rp 35.000',
-          warranty: 'Full Garansi',
-        },
+        { duration: '1 BULAN (1 PROFIL)', price: 'IDR 20.000', warranty: 'Garansi 1 Bulan' },
+        { duration: '1 BULAN (FULL ACCESS)', price: 'IDR 35.000', warranty: 'Garansi 1 Bulan' },
       ],
-      description: 'Netflix Premium UHD 4K tanpa batas',
-      note: '✅ Shared Account\n✅ Garansi sesuai paket\n✅ UHD 4K Quality',
+      description: 'Netflix Premium UHD 4K',
+      note: 'Status: Shared Account\nAkses: Resolusi 4K UHD',
     },
 
-    // ── YOUTUBE PREMIUM ──
     youtube: {
-      name: '▶️ YouTube Premium',
+      name: 'YOUTUBE PREMIUM',
       keyword: 'youtube',
-      emoji: '▶️',
       prices: [
-        {
-          duration: '1 Bulan',
-          price: 'Rp 5.000',
-          warranty: 'Full Garansi (Via Invite)',
-        },
+        { duration: '1 BULAN', price: 'IDR 5.000', warranty: 'Garansi 1 Bulan' },
       ],
-      description: 'YouTube Premium tanpa iklan + YouTube Music',
-      note: '✅ Sistem Invite (pakai email kamu sendiri)\n✅ Full garansi 1 Bulan\n✅ No Ads, Background Play',
+      description: 'YouTube Premium No Ads & YT Music',
+      note: 'Status: Via Invite (Email Pribadi)\nAkses: Background Play & No Ads',
     },
   },
 
-  // ── Pesan Selamat Datang (opsional) ───────────────────
-  welcomeMessage: (groupName) =>
-    `👋 *Halo! Selamat datang di ${groupName}*\n\n` +
-    `Ketik *#list* untuk lihat daftar aplikasi premium.\n` +
-    `Ketik *#help* untuk bantuan.\n` +
-    `Ketik *#bayar* untuk info pembayaran QRIS.`,
-
   // ── Footer ────────────────────────────────────────────
-  footer: '─────────────────────\n💎 *PREMIUM APP STORE* │ Fast & Trusted',
+  footer: '────────────────\n∆ TRIANGLE STORE ∆',
 };

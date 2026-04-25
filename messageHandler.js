@@ -1,8 +1,7 @@
 /**
  * ══════════════════════════════════════════════════════════
- *  MESSAGE HANDLER - Bot WhatsApp Premium App Store
+ *  MESSAGE HANDLER - TRIANGLE STORE
  * ══════════════════════════════════════════════════════════
- *  Menghandle semua pesan masuk dan menentukan respons bot.
  */
 
 const fs = require('fs');
@@ -12,22 +11,17 @@ const { MessageMedia } = require('whatsapp-web.js');
 // ── Helper: Buat teks daftar produk ─────────────────────
 function buildProductList() {
   const products = Object.values(config.products);
-  let list = `╔══════════════════════════╗\n`;
-  list += `║  ${config.storeName}  ║\n`;
-  list += `╠══════════════════════════╣\n`;
-  list += `║   📋 *DAFTAR APLIKASI*   ║\n`;
-  list += `╠══════════════════════════╣\n\n`;
+  let list = `[ ${config.storeName} ]\n`;
+  list += `────────────────\n`;
+  list += `DAFTAR APLIKASI\n\n`;
 
   products.forEach((product, index) => {
-    list += `  ${index + 1}. ${product.emoji} *${product.name}*\n`;
+    list += `${index + 1}. ${product.name}\n`;
   });
 
-  list += `\n╚══════════════════════════╝\n\n`;
-  list += `📌 *Cara Order:*\n`;
-  list += `Ketik nama aplikasi untuk lihat harga.\n`;
-  list += `Contoh: ketik *GPT* atau *Leonardo*\n\n`;
-  list += `💳 Ketik *#bayar* untuk info pembayaran.\n`;
-  list += `❓ Ketik *#help* untuk bantuan.\n\n`;
+  list += `\nKetik nama aplikasi untuk cek harga (Contoh: GPT)\n`;
+  list += `Ketik #bayar untuk cara pembayaran\n`;
+  list += `Ketik #help untuk bantuan\n`;
   list += config.footer;
 
   return list;
@@ -35,24 +29,16 @@ function buildProductList() {
 
 // ── Helper: Buat teks detail harga produk ───────────────
 function buildProductDetail(product) {
-  let detail = `╔══════════════════════════╗\n`;
-  detail += `║  ${product.emoji} *${product.name}*  ║\n`;
-  detail += `╠══════════════════════════╣\n\n`;
-  detail += `📝 *Deskripsi:*\n${product.description}\n\n`;
-  detail += `💰 *DAFTAR HARGA:*\n`;
-  detail += `─────────────────────\n`;
+  let detail = `[ ${product.name} ]\n`;
+  detail += `────────────────\n`;
+  detail += `${product.note}\n\n`;
+  detail += `HARGA:\n`;
 
-  product.prices.forEach((p, i) => {
-    detail += `\n📦 *Paket ${i + 1} — ${p.duration}*\n`;
-    detail += `   💵 Harga: *${p.price}*\n`;
-    detail += `   🛡️ Garansi: *${p.warranty}*\n`;
+  product.prices.forEach((p) => {
+    detail += `- ${p.duration}: ${p.price} (${p.warranty})\n`;
   });
 
-  detail += `\n─────────────────────\n\n`;
-  detail += `${product.note}\n\n`;
-  detail += `🛒 *Mau order?*\n`;
-  detail += `Ketik *#bayar* untuk mendapatkan QRIS pembayaran.\n`;
-  detail += `Lalu konfirmasi ke admin setelah transfer.\n\n`;
+  detail += `\nKetik #bayar untuk konfirmasi pesanan.\n`;
   detail += config.footer;
 
   return detail;
@@ -60,23 +46,17 @@ function buildProductDetail(product) {
 
 // ── Helper: Buat teks help ──────────────────────────────
 function buildHelpMessage() {
-  let help = `╔══════════════════════════╗\n`;
-  help += `║    ❓ *MENU BANTUAN*     ║\n`;
-  help += `╠══════════════════════════╣\n\n`;
-  help += `📋 *#list*\n`;
-  help += `   → Lihat daftar aplikasi premium\n\n`;
-
+  let help = `[ BANTUAN ]\n`;
+  help += `────────────────\n`;
+  help += `#list   : Lihat daftar aplikasi\n`;
+  
   const products = Object.values(config.products);
   products.forEach((product) => {
-    help += `${product.emoji} *${product.keyword.toUpperCase()}*\n`;
-    help += `   → Lihat harga ${product.name}\n\n`;
+    help += `${product.keyword.toLowerCase().padEnd(7, ' ')} : Cek harga ${product.name}\n`;
   });
 
-  help += `💳 *#bayar*\n`;
-  help += `   → Info pembayaran via QRIS\n\n`;
-  help += `👤 *#owner*\n`;
-  help += `   → Hubungi admin/owner\n\n`;
-  help += `╚══════════════════════════╝\n\n`;
+  help += `#bayar  : Cara pembayaran\n`;
+  help += `#owner  : Kontak admin\n`;
   help += config.footer;
 
   return help;
@@ -84,31 +64,19 @@ function buildHelpMessage() {
 
 // ── Helper: Buat teks pembayaran ────────────────────────
 function buildPaymentMessage() {
-  let payment = `╔══════════════════════════╗\n`;
-  payment += `║   💳 *INFO PEMBAYARAN*   ║\n`;
-  payment += `╠══════════════════════════╣\n\n`;
-  payment += `📱 *Scan QRIS di bawah ini* untuk melakukan pembayaran.\n\n`;
-  payment += `📌 *Langkah-langkah:*\n`;
-  payment += `1️⃣ Pilih aplikasi yang mau dibeli\n`;
-  payment += `2️⃣ Scan QRIS & bayar sesuai harga\n`;
-  payment += `3️⃣ Screenshot bukti transfer\n`;
-  payment += `4️⃣ Kirim screenshot ke *GRUP INI*\n`;
-  payment += `5️⃣ Tunggu proses (maks 1x24 jam)\n\n`;
-  payment += `🚨 *WAJIB DIBACA — SYARAT BUKTI TRANSFER:*\n`;
-  payment += `─────────────────────\n`;
-  payment += `Screenshot bukti transfer *HARUS* memperlihatkan:\n\n`;
-  payment += `  ✅ *JAM & TANGGAL* transaksi\n`;
-  payment += `  ✅ *NOMINAL* yang ditransfer\n`;
-  payment += `  ✅ *NAMA PENGIRIM*\n`;
-  payment += `  ✅ *STATUS BERHASIL* (bukan pending)\n`;
-  payment += `  ✅ *ID TRANSAKSI / No. Referensi*\n\n`;
-  payment += `⚠️ Screenshot yang *TIDAK LENGKAP* atau *TERPOTONG*\n`;
-  payment += `❌ *TIDAK AKAN DIPROSES!*\n`;
-  payment += `─────────────────────\n\n`;
-  payment += `📢 Kirim screenshot langsung ke *GRUP INI*\n`;
-  payment += `agar admin bisa langsung memproses pesananmu.\n\n`;
-  payment += `• Transfer sesuai nominal, jangan lebih/kurang\n`;
-  payment += `• Jangan edit/crop screenshot\n\n`;
+  let payment = `[ PEMBAYARAN ]\n`;
+  payment += `────────────────\n`;
+  payment += `Scan QRIS di bawah ini untuk membayar.\n\n`;
+  payment += `CARA ORDER:\n`;
+  payment += `1. Scan QRIS & transfer sesuai nominal.\n`;
+  payment += `2. Screenshot bukti transfer berhasil.\n`;
+  payment += `3. Kirim ke grup ini.\n\n`;
+  payment += `SYARAT BUKTI TRANSFER:\n`;
+  payment += `- Terlihat jam & tanggal\n`;
+  payment += `- Terlihat nominal\n`;
+  payment += `- Status berhasil (bukan pending)\n`;
+  payment += `- No referensi / ID transaksi\n\n`;
+  payment += `Bukti terpotong/edit = Tidak diproses.\n`;
   payment += config.footer;
 
   return payment;
@@ -116,87 +84,54 @@ function buildPaymentMessage() {
 
 // ── Main Handler ────────────────────────────────────────
 async function handleMessage(message, client) {
-  // Ambil teks pesan, lowercase untuk matching
   const body = message.body.trim().toLowerCase();
 
-  // Skip pesan kosong
   if (!body) return;
 
-  // ── Command: #list ──
   if (body === `${config.prefix}list`) {
-    const listText = buildProductList();
-    await message.reply(listText);
-    console.log(`[BOT] 📋 Sent product list`);
+    await message.reply(buildProductList());
     return;
   }
 
-  // ── Command: #help ──
   if (body === `${config.prefix}help`) {
-    const helpText = buildHelpMessage();
-    await message.reply(helpText);
-    console.log(`[BOT] ❓ Sent help message`);
+    await message.reply(buildHelpMessage());
     return;
   }
 
-  // ── Command: #bayar ──
   if (body === `${config.prefix}bayar`) {
-    const paymentText = buildPaymentMessage();
+    await message.reply(buildPaymentMessage());
 
-    // Kirim pesan teks dulu
-    await message.reply(paymentText);
-
-    // Kirim gambar QRIS
     try {
       if (fs.existsSync(config.qrisImagePath)) {
         const media = MessageMedia.fromFilePath(config.qrisImagePath);
         const chat = await message.getChat();
         await chat.sendMessage(media, {
-          caption: '💳 *Scan QRIS di atas untuk pembayaran*\n\n' +
-            '🚨 *PERHATIAN!*\n' +
-            'Setelah bayar, *WAJIB* kirim screenshot bukti transfer ke *GRUP INI* dengan detail:\n\n' +
-            '📌 *JAM & TANGGAL* transaksi\n' +
-            '📌 *NOMINAL* yang dibayar\n' +
-            '📌 *NAMA PENGIRIM & STATUS BERHASIL*\n\n' +
-            '❌ Bukti tidak lengkap = *TIDAK DIPROSES*\n' +
-            '✅ Bukti lengkap = *LANGSUNG DIPROSES* 🚀',
+          caption: '[ SCAN QRIS ]\nKirim bukti transfer ke grup ini setelah scan.',
         });
-        console.log(`[BOT] 💳 Sent QRIS image`);
       } else {
-        await message.reply('⚠️ Maaf, gambar QRIS belum tersedia. Hubungi admin.');
-        console.log(`[BOT] ⚠️ QRIS image not found at: ${config.qrisImagePath}`);
+        await message.reply('Sistem error: QRIS tidak ditemukan.');
       }
     } catch (err) {
-      console.error('[BOT] Error sending QRIS:', err);
-      await message.reply('⚠️ Terjadi error saat mengirim QRIS. Coba lagi nanti.');
+      await message.reply('Sistem error: Gagal memuat QRIS.');
     }
     return;
   }
 
-  // ── Command: #owner ──
   if (body === `${config.prefix}owner`) {
     const ownerMsg =
-      `╔══════════════════════════╗\n` +
-      `║     👤 *CONTACT ADMIN*   ║\n` +
-      `╠══════════════════════════╣\n\n` +
-      `📱 Hubungi owner/admin:\n` +
-      `wa.me/${config.ownerNumber}\n\n` +
-      `⏰ *Jam Operasional:*\n` +
-      `Senin - Minggu: 08:00 - 23:00 WIB\n\n` +
-      `📌 Respon maks 1x24 jam\n\n` +
+      `[ ADMIN ]\n` +
+      `────────────────\n` +
+      `Kontak: wa.me/${config.ownerNumber}\n` +
+      `Operasional: 08:00 - 23:00 WIB\n` +
       config.footer;
-
     await message.reply(ownerMsg);
-    console.log(`[BOT] 👤 Sent owner info`);
     return;
   }
 
-  // ── Keyword Produk (GPT, Leonardo, dll) ───────────────
   const products = Object.values(config.products);
   for (const product of products) {
     if (body === product.keyword.toLowerCase()) {
-      const detailText = buildProductDetail(product);
-      await message.reply(detailText);
-      console.log(`[BOT] 💰 Sent pricing for: ${product.name}`);
+      await message.reply(buildProductDetail(product));
       return;
     }
   }
