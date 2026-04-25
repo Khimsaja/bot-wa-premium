@@ -16,7 +16,7 @@ function buildProductList() {
   list += `DAFTAR APLIKASI\n\n`;
 
   products.forEach((product, index) => {
-    list += `${index + 1}. ${product.name}\n`;
+    list += `${index + 1}. ${product.name} (Ketik: ${product.keyword.toUpperCase()})\n`;
   });
 
   list += `\nKetik nama aplikasi untuk cek harga (Contoh: GPT)\n`;
