@@ -20,7 +20,7 @@
  * ══════════════════════════════════════════════════════════
  */
 
-const { Client, LocalAuth } = require('whatsapp-web.js');
+const { Client, LocalAuth, MessageMedia } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const { handleMessage } = require('./messageHandler');
 const config = require('./config');
@@ -121,18 +121,57 @@ client.on('message', async (message) => {
 client.on('group_join', async (notification) => {
   try {
     const chat = await notification.getChat();
-    const contact = await notification.getContact();
-    const pushname = contact.pushname || 'Member Baru';
+    // Ambil data member yang baru masuk (bisa lebih dari 1 kalau di-add sekaligus)
+    const newMembers = notification.recipientIds;
+    
+    for (const memberId of newMembers) {
+      const contact = await client.getContactById(memberId);
+      const pushname = contact.pushname || contact.number;
 
-    const welcomeMsg =
-      `👋 *Halo ${pushname}!*\n\n` +
-      `Selamat datang di *${chat.name}*! 🎉\n\n` +
-      `Ketik *#list* untuk lihat daftar aplikasi premium.\n` +
-      `Ketik *#help* untuk bantuan.\n\n` +
-      config.footer;
+      // Format Jam dan Tanggal
+      const now = new Date();
+      // Pakai timezone Asia/Jakarta biar selalu WIB
+      const tanggal = now.toLocaleDateString('id-ID', { timeZone: 'Asia/Jakarta', weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+      const jam = now.toLocaleTimeString('id-ID', { timeZone: 'Asia/Jakarta', hour: '2-digit', minute: '2-digit' }) + ' WIB';
 
-    await chat.sendMessage(welcomeMsg);
-    console.log(`[BOT] 👋 Welcome message sent for: ${pushname}`);
+      // Teks Welcome
+      const welcomeMsg =
+        `╔══════════════════════════╗\n` +
+        `║     🎉 *WELCOME!* 🎉     ║\n` +
+        `╠══════════════════════════╣\n\n` +
+        `👋 Halo @${contact.number}!\n` +
+        `Selamat datang di *${chat.name}*\n\n` +
+        `🗓️ *Tanggal Masuk:* ${tanggal}\n` +
+        `⏰ *Jam:* ${jam}\n\n` +
+        `Ketik *#list* untuk lihat daftar aplikasi premium.\n` +
+        `Ketik *#help* untuk bantuan.\n\n` +
+        config.footer;
+
+      // Coba ambil foto profil WA member baru
+      let profilePicUrl = null;
+      try {
+        profilePicUrl = await contact.getProfilePicUrl();
+      } catch (err) {
+        console.log(`[BOT] Gagal mengambil PP untuk ${contact.number}`);
+      }
+
+      if (profilePicUrl) {
+        // Kalau PP ada/tidak diprivate, kirim fotonya + caption welcome
+        try {
+          const media = await MessageMedia.fromUrl(profilePicUrl);
+          await chat.sendMessage(media, { caption: welcomeMsg, mentions: [contact] });
+          console.log(`[BOT] 👋 Welcome message (dengan foto) sent for: ${pushname}`);
+        } catch (mediaErr) {
+          // Kalau gagal download gambar, fallback ke teks aja
+          await chat.sendMessage(welcomeMsg, { mentions: [contact] });
+          console.log(`[BOT] 👋 Welcome message (teks fallback) sent for: ${pushname}`);
+        }
+      } else {
+        // Kalau PP kosong / diprivate, kirim teks aja
+        await chat.sendMessage(welcomeMsg, { mentions: [contact] });
+        console.log(`[BOT] 👋 Welcome message (tanpa foto) sent for: ${pushname}`);
+      }
+    }
   } catch (error) {
     console.error('[BOT] Error sending welcome message:', error);
   }
