@@ -11,7 +11,7 @@ module.exports = {
     {
       name: 'wa-premium-bot',
       script: 'index.js',
-      cwd: '/opt/wa-premium-bot',
+      cwd: __dirname,
 
       // ── Process Management ──────────────────────────────
       instances: 1,            // Hanya 1 instance (WhatsApp session)
@@ -25,8 +25,8 @@ module.exports = {
       restart_delay: 5000,     // Delay 5 detik antar restart
 
       // ── Logs ────────────────────────────────────────────
-      error_file: '/opt/wa-premium-bot/logs/error.log',
-      out_file: '/opt/wa-premium-bot/logs/output.log',
+      error_file: './logs/error.log',
+      out_file: './logs/output.log',
       log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
       merge_logs: true,
 
