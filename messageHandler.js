@@ -68,25 +68,7 @@ function buildHelpMessage() {
   return help;
 }
 
-// ── Helper: Buat teks pembayaran ────────────────────────
-function buildPaymentMessage() {
-  let payment = `[ *PEMBAYARAN* ]\n`;
-  payment += `────────────────\n`;
-  payment += `Scan QRIS di bawah ini untuk membayar.\n\n`;
-  payment += `*CARA ORDER:*\n`;
-  payment += `1. Scan QRIS & transfer sesuai nominal.\n`;
-  payment += `2. Screenshot bukti transfer berhasil.\n`;
-  payment += `3. Kirim ke grup ini.\n\n`;
-  payment += `*SYARAT BUKTI TRANSFER:*\n`;
-  payment += `- Terlihat jam & tanggal\n`;
-  payment += `- Terlihat nominal\n`;
-  payment += `- Status berhasil (bukan pending)\n`;
-  payment += `- No referensi / ID transaksi\n\n`;
-  payment += `*Bukti terpotong/edit = Tidak diproses.*\n`;
-  payment += config.footer;
 
-  return payment;
-}
 
 // ── Main Handler ────────────────────────────────────────
 async function handleMessage(message, client) {
@@ -105,15 +87,18 @@ async function handleMessage(message, client) {
   }
 
   if (body === `${config.prefix}bayar`) {
-    await message.reply(buildPaymentMessage());
-
     try {
       if (fs.existsSync(config.qrisImagePath)) {
         const media = MessageMedia.fromFilePath(config.qrisImagePath);
         const chat = await message.getChat();
-        await chat.sendMessage(media, {
-          caption: '[ SCAN QRIS ]\nKirim bukti transfer ke grup ini setelah scan.',
-        });
+        
+        const captionText = 
+          `*PEMBAYARAN ${config.storeName}* 👑\n\n` +
+          `*SCAN QRIS ONLY*\n` +
+          `> Note : jika transfer selain QRIS, dianggap hangus !!\n\n` +
+          `*Wajib* menyertakan bukti transfer dengan menampilkan *Tanggal & Waktu* transfer, jika tidak maka pesanan tidak akan diproses`;
+
+        await chat.sendMessage(media, { caption: captionText });
       } else {
         await message.reply('Sistem error: QRIS tidak ditemukan.');
       }
