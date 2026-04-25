@@ -67,6 +67,13 @@ client.on('qr', (qr) => {
   console.log('\n📱 Scan QR Code di bawah ini dengan WhatsApp:\n');
   qrcode.generate(qr, { small: true });
   console.log('\n⏳ Menunggu scan...\n');
+  
+  // Fallback kalau terminalnya bikin QR mleyot
+  console.log('⚠️ KALAU QR DI ATAS PANJANG/MLEYOT DAN GAGAL DISCAN:');
+  console.log('1. Copy teks panjang di bawah ini:');
+  console.log('\n' + qr + '\n');
+  console.log('2. Buka web: https://www.the-qrcode-generator.com/');
+  console.log('3. Paste teksnya ke sana, lalu scan QR yang muncul di webnya pakai HP lu.');
 });
 
 // ── Event: Authenticated ────────────────────────────────
