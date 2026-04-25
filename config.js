@@ -28,7 +28,7 @@ module.exports = {
         { duration: '1 BULAN', price: 'IDR 25.000', warranty: 'Garansi 1 Bulan' },
       ],
       description: 'Akses penuh ChatGPT Plus (GPT-4o, GPT-4.5)',
-      note: 'Status: Shared Account\nAkses: Semua fitur premium aktif',
+      note: '✅ Status: Shared Account\n✅ Akses: Semua fitur premium aktif',
     },
 
     leonardo: {
@@ -39,7 +39,7 @@ module.exports = {
         { duration: '1 BULAN', price: 'IDR 30.000', warranty: 'Garansi 1 Bulan' },
       ],
       description: 'Akses premium Leonardo AI image generator',
-      note: 'Status: Shared Account\nAkses: Unlimited generation',
+      note: '✅ Status: Shared Account\n✅ Akses: Unlimited generation',
     },
 
     canva: {
@@ -49,7 +49,7 @@ module.exports = {
         { duration: '1 BULAN', price: 'IDR 15.000', warranty: 'Garansi 1 Bulan' },
       ],
       description: 'Akses Canva Pro premium design',
-      note: 'Status: Private Account\nAkses: Semua template & fitur pro',
+      note: '✅ Status: Private Account\n✅ Akses: Semua template & fitur pro',
     },
 
     spotify: {
@@ -60,7 +60,7 @@ module.exports = {
         { duration: '3 BULAN', price: 'IDR 20.000', warranty: 'Garansi 3 Bulan' },
       ],
       description: 'Spotify Premium no ads & offline mode',
-      note: 'Status: Private / Shared Account\nAkses: Full premium features',
+      note: '✅ Status: Private / Shared Account\n✅ Akses: Full premium features',
     },
 
     netflix: {
@@ -71,7 +71,7 @@ module.exports = {
         { duration: '1 BULAN (FULL ACCESS)', price: 'IDR 35.000', warranty: 'Garansi 1 Bulan' },
       ],
       description: 'Netflix Premium UHD 4K',
-      note: 'Status: Shared Account\nAkses: Resolusi 4K UHD',
+      note: '✅ Status: Shared Account\n✅ Akses: Resolusi 4K UHD',
     },
 
     youtube: {
@@ -81,7 +81,7 @@ module.exports = {
         { duration: '1 BULAN', price: 'IDR 5.000', warranty: 'Garansi 1 Bulan' },
       ],
       description: 'YouTube Premium No Ads & YT Music',
-      note: 'Status: Via Invite (Email Pribadi)\nAkses: Background Play & No Ads',
+      note: '✅ Status: Via Invite (Email Pribadi)\n✅ Akses: Background Play & No Ads',
     },
   },
 

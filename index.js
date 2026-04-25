@@ -143,14 +143,14 @@ client.on('group_join', async (notification) => {
 
       // Teks Welcome
       const welcomeMsg =
-        `[ WELCOME ]\n` +
+        `[ *WELCOME* ]\n` +
         `────────────────\n` +
-        `Halo @${contact.number}\n` +
-        `Selamat datang di ${chat.name}\n\n` +
-        `Tanggal Masuk: ${tanggal}\n` +
-        `Jam: ${jam}\n\n` +
-        `Ketik #list untuk daftar aplikasi\n` +
-        `Ketik #help untuk bantuan\n` +
+        `Halo *@${contact.number}*\n` +
+        `Selamat datang di *${chat.name}*\n\n` +
+        `*Tanggal Masuk:* ${tanggal}\n` +
+        `*Jam:* ${jam}\n\n` +
+        `Ketik *#list* untuk daftar aplikasi\n` +
+        `Ketik *#help* untuk bantuan\n` +
         config.footer;
 
       // Coba ambil foto profil WA member baru

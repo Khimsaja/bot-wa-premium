@@ -11,17 +11,17 @@ const { MessageMedia } = require('whatsapp-web.js');
 // ── Helper: Buat teks daftar produk ─────────────────────
 function buildProductList() {
   const products = Object.values(config.products);
-  let list = `[ ${config.storeName} ]\n`;
+  let list = `[ *${config.storeName}* ]\n`;
   list += `────────────────\n`;
-  list += `DAFTAR APLIKASI\n\n`;
+  list += `*DAFTAR APLIKASI*\n\n`;
 
   products.forEach((product, index) => {
     list += `${index + 1}. ${product.name} (Ketik: ${product.keyword.toUpperCase()})\n`;
   });
 
-  list += `\nKetik nama aplikasi untuk cek harga (Contoh: GPT)\n`;
-  list += `Ketik #bayar untuk cara pembayaran\n`;
-  list += `Ketik #help untuk bantuan\n`;
+  list += `\nKetik nama aplikasi untuk cek harga (Contoh: *GPT*)\n`;
+  list += `Ketik *#bayar* untuk cara pembayaran\n`;
+  list += `Ketik *#help* untuk bantuan\n`;
   list += config.footer;
 
   return list;
@@ -29,16 +29,16 @@ function buildProductList() {
 
 // ── Helper: Buat teks detail harga produk ───────────────
 function buildProductDetail(product) {
-  let detail = `[ ${product.name} ]\n`;
+  let detail = `[ *${product.name}* ]\n`;
   detail += `────────────────\n`;
   detail += `${product.note}\n\n`;
-  detail += `HARGA:\n`;
+  detail += `*HARGA:*\n`;
 
   product.prices.forEach((p) => {
-    detail += `- ${p.duration}: ${p.price} (${p.warranty})\n`;
+    detail += `- *${p.duration}*: ${p.price} (${p.warranty})\n`;
   });
 
-  detail += `\nKetik #bayar untuk konfirmasi pesanan.\n`;
+  detail += `\nKetik *#bayar* untuk konfirmasi pesanan.\n`;
   detail += config.footer;
 
   return detail;
@@ -46,17 +46,17 @@ function buildProductDetail(product) {
 
 // ── Helper: Buat teks help ──────────────────────────────
 function buildHelpMessage() {
-  let help = `[ BANTUAN ]\n`;
+  let help = `[ *BANTUAN* ]\n`;
   help += `────────────────\n`;
-  help += `#list   : Lihat daftar aplikasi\n`;
+  help += `*#list*   : Lihat daftar aplikasi\n`;
   
   const products = Object.values(config.products);
   products.forEach((product) => {
     help += `${product.keyword.toLowerCase().padEnd(7, ' ')} : Cek harga ${product.name}\n`;
   });
 
-  help += `#bayar  : Cara pembayaran\n`;
-  help += `#owner  : Kontak admin\n`;
+  help += `*#bayar*  : Cara pembayaran\n`;
+  help += `*#owner*  : Kontak admin\n`;
   help += config.footer;
 
   return help;
@@ -64,19 +64,19 @@ function buildHelpMessage() {
 
 // ── Helper: Buat teks pembayaran ────────────────────────
 function buildPaymentMessage() {
-  let payment = `[ PEMBAYARAN ]\n`;
+  let payment = `[ *PEMBAYARAN* ]\n`;
   payment += `────────────────\n`;
   payment += `Scan QRIS di bawah ini untuk membayar.\n\n`;
-  payment += `CARA ORDER:\n`;
+  payment += `*CARA ORDER:*\n`;
   payment += `1. Scan QRIS & transfer sesuai nominal.\n`;
   payment += `2. Screenshot bukti transfer berhasil.\n`;
   payment += `3. Kirim ke grup ini.\n\n`;
-  payment += `SYARAT BUKTI TRANSFER:\n`;
+  payment += `*SYARAT BUKTI TRANSFER:*\n`;
   payment += `- Terlihat jam & tanggal\n`;
   payment += `- Terlihat nominal\n`;
   payment += `- Status berhasil (bukan pending)\n`;
   payment += `- No referensi / ID transaksi\n\n`;
-  payment += `Bukti terpotong/edit = Tidak diproses.\n`;
+  payment += `*Bukti terpotong/edit = Tidak diproses.*\n`;
   payment += config.footer;
 
   return payment;
@@ -119,10 +119,10 @@ async function handleMessage(message, client) {
 
   if (body === `${config.prefix}owner`) {
     const ownerMsg =
-      `[ ADMIN ]\n` +
+      `[ *ADMIN* ]\n` +
       `────────────────\n` +
-      `Kontak: wa.me/${config.ownerNumber}\n` +
-      `Operasional: 08:00 - 23:00 WIB\n` +
+      `*Kontak:* wa.me/${config.ownerNumber}\n` +
+      `*Operasional:* 08:00 - 23:00 WIB\n` +
       config.footer;
     await message.reply(ownerMsg);
     return;
