@@ -35,7 +35,13 @@ function buildProductDetail(product) {
   detail += `*HARGA:*\n`;
 
   product.prices.forEach((p) => {
-    detail += `- *${p.duration}*: ${p.price} (${p.warranty})\n`;
+    if (p.category) {
+      detail += `\n${p.category}\n`;
+    } else if (p.warranty) {
+      detail += `- *${p.duration}*: ${p.price} (${p.warranty})\n`;
+    } else {
+      detail += `${p.duration} : ${p.price}\n`;
+    }
   });
 
   detail += `\nKetik *#bayar* untuk konfirmasi pesanan.\n`;

@@ -35,11 +35,11 @@ module.exports = {
       name: 'LEONARDO AI',
       keyword: 'leonardo',
       prices: [
-        { duration: '1 MINGGU', price: 'IDR 10.000', warranty: 'Garansi 7 Hari' },
-        { duration: '1 BULAN', price: 'IDR 30.000', warranty: 'Garansi 1 Bulan' },
+        { category: 'PRIVATE' },
+        { duration: '1 BULAN', price: '18.000' },
       ],
       description: 'Akses premium Leonardo AI image generator',
-      note: '✅ Status: Shared Account\n✅ Akses: Unlimited generation',
+      note: '✅ AKUN DARI SELLER\n✅ GARANSI 20 HARI\n✅ KREDIT 8.5K',
     },
 
     canva: {
@@ -56,11 +56,15 @@ module.exports = {
       name: 'SPOTIFY PREMIUM',
       keyword: 'spotify',
       prices: [
-        { duration: '1 BULAN', price: 'IDR 8.000', warranty: 'Garansi 1 Bulan' },
-        { duration: '3 BULAN', price: 'IDR 20.000', warranty: 'Garansi 3 Bulan' },
+        { category: '🏷 INDPLAN NOGAR' },
+        { duration: '1 Bulan', price: '9.000' },
+        { duration: '3 Bulan', price: '12.000' },
+        { category: '🏷 FAMPLAN FULLGAR' },
+        { duration: '1 Bulan', price: '18.000' },
+        { duration: '2 Bulan', price: '30.000' },
       ],
       description: 'Spotify Premium no ads & offline mode',
-      note: '✅ Status: Private / Shared Account\n✅ Akses: Full premium features',
+      note: '✅ Akun Dari Seller\n✅ Bisa Semua Perangkat',
     },
 
     netflix: {
